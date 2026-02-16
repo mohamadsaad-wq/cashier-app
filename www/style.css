@@ -39,7 +39,7 @@ label {
     margin-bottom: 5px;
 }
 
-input {
+input, select {
     width: 100%;
     padding: 13px;
     margin-bottom: 20px;
@@ -47,9 +47,10 @@ input {
     border: 1px solid #e8ddd6;
     font-size: 15px;
     background-color: #faf7f5;
+    appearance: none; /* Removes default mobile styling */
 }
 
-input:focus {
+input:focus, select:focus {
     border-color: #c38e8e;
     outline: none;
     background-color: #ffffff;
@@ -76,21 +77,18 @@ button {
     text-align: center;
 }
 
-/* Red for Customer Must Pay */
 .danger { 
     background-color: #ffe5e5; 
     color: #d93025; 
     border: 1px solid #f8b4b4;
 }
 
-/* Blue for Return to Customer (The changed color) */
 .info { 
     background-color: #e8f0fe; 
     color: #1a73e8; 
     border: 1px solid #c2d7fa;
 }
 
-/* Green for Payment Completed */
 .success { 
     background-color: #e6f4ea; 
     color: #1e8e3e; 
