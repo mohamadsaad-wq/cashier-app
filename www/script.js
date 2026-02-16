@@ -1,4 +1,5 @@
 let isArabic = false;
+let showDetails = false;
 
 function formatNumber(number) {
     return Math.round(number).toLocaleString("en-US");
@@ -9,14 +10,17 @@ function handleInput(input) {
     let parts = value.split('.');
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     input.value = parts.join('.');
-    
     calculate();
 }
 
 function getRawValue(id) {
-    const element = document.getElementById(id);
-    const val = element.value.replace(/,/g, '');
+    const val = document.getElementById(id).value.replace(/,/g, '');
     return parseFloat(val) || 0;
+}
+
+function toggleDetails() {
+    showDetails = !showDetails;
+    calculate();
 }
 
 function toggleLanguage() {
@@ -26,11 +30,11 @@ function toggleLanguage() {
 
     if (isArabic) {
         container.classList.add("rtl");
-        document.getElementById("title").innerText = "حاسبة الكاشير";
+        document.getElementById("title").innerText = "الحاسبة";
         document.getElementById("labelTotal").innerText = "التكلفة الإجمالية (ل.س)";
         document.getElementById("labelPaid").innerText = "المبلغ المدفوع ($)";
-        document.getElementById("labelRate").innerText = "سعر الشراء في السوق";
-        document.getElementById("labelMargin").innerText = "الهامش (%)";
+        document.getElementById("labelRate").innerText = "سعر السوق";
+        document.getElementById("labelMargin").innerText = "الهامش";
         langBtn.innerText = "English";
     } else {
         container.classList.remove("rtl");
@@ -38,7 +42,7 @@ function toggleLanguage() {
         document.getElementById("labelTotal").innerText = "Total Cost (SYP)";
         document.getElementById("labelPaid").innerText = "Customer Paid ($)";
         document.getElementById("labelRate").innerText = "Market Buy Rate";
-        document.getElementById("labelMargin").innerText = "Margin (%)";
+        document.getElementById("labelMargin").innerText = "Margin";
         langBtn.innerText = "العربية";
     }
     calculate();
@@ -48,30 +52,33 @@ function calculate() {
     const totalCost = getRawValue("totalCost");
     const paidUSD = getRawValue("paidUSD");
     const marketBuy = getRawValue("marketBuy");
-    // This now gets the value from the dropdown
     const marginPercent = parseFloat(document.getElementById("margin").value);
-
     const output = document.getElementById("output");
 
-    if (marketBuy === 0) {
-        output.innerHTML = "";
-        return;
-    }
+    if (marketBuy === 0) { output.innerHTML = ""; return; }
 
     const internalBuyRate = marketBuy * (1 - (marginPercent / 100));
     const paidInSYP = paidUSD * internalBuyRate;
     const difference = paidInSYP - totalCost;
 
     const tRate = isArabic ? "سعر الشراء الداخلي" : "Internal Buy Rate";
-    const tPaid = isArabic ? "إجمالي المدفوع بالليرة" : "Total Paid in SYP";
+    const tPaid = isArabic ? "إجمالي المدفوع (ل.س)" : "Total Paid (SYP)";
     const tReturn = isArabic ? "باقي للزبون" : "Return to customer";
     const tMustPay = isArabic ? "يجب على الزبون دفع" : "Customer must pay";
     const tSuccess = isArabic ? "تم دفع كامل المبلغ" : "Payment completed";
+    const tDetails = isArabic ? (showDetails ? "إخفاء التفاصيل" : "المزيد من التفاصيل") : (showDetails ? "Hide Details" : "More Details");
     const currency = isArabic ? "ل.س" : "SYP";
 
     let resultHTML = `
-        <p style="margin-top:10px;"><strong>${tRate}:</strong> ${formatNumber(internalBuyRate)}</p>
-        <p><strong>${tPaid}:</strong> ${formatNumber(paidInSYP)}</p>
+        <div class="total-paid-card">
+            <small>${tPaid}</small>
+            <span>${formatNumber(paidInSYP)}</span>
+        </div>
+        
+        <button class="details-btn" onclick="toggleDetails()">${tDetails}</button>
+        <div class="hidden-details" style="display: ${showDetails ? 'block' : 'none'}">
+            <strong>${tRate}:</strong> ${formatNumber(internalBuyRate)}
+        </div>
     `;
 
     if (difference > 0) {
