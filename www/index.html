@@ -25,7 +25,14 @@
         <input type="text" id="marketBuy" placeholder="0" oninput="handleInput(this)">
 
         <label id="labelMargin">Margin (%)</label>
-        <input type="text" id="margin" placeholder="0" oninput="handleInput(this)">
+        <select id="margin" onchange="calculate()">
+            <option value="0">0%</option>
+            <option value="1">1%</option>
+            <option value="2" selected>2%</option>
+            <option value="3">3%</option>
+            <option value="4">4%</option>
+            <option value="5">5%</option>
+        </select>
 
         <div id="output"></div>
     </div>
