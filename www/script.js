@@ -1,11 +1,9 @@
 let isArabic = false;
 
-// Formats number for display with commas
 function formatNumber(number) {
     return Math.round(number).toLocaleString("en-US");
 }
 
-// Handles input formatting and real-time calculation
 function handleInput(input) {
     let value = input.value.replace(/[^0-9.]/g, '');
     let parts = value.split('.');
@@ -15,9 +13,9 @@ function handleInput(input) {
     calculate();
 }
 
-// Strip commas for math
 function getRawValue(id) {
-    const val = document.getElementById(id).value.replace(/,/g, '');
+    const element = document.getElementById(id);
+    const val = element.value.replace(/,/g, '');
     return parseFloat(val) || 0;
 }
 
@@ -28,7 +26,7 @@ function toggleLanguage() {
 
     if (isArabic) {
         container.classList.add("rtl");
-        document.getElementById("title").innerText = "الحاسبة";
+        document.getElementById("title").innerText = "حاسبة الكاشير";
         document.getElementById("labelTotal").innerText = "التكلفة الإجمالية (ل.س)";
         document.getElementById("labelPaid").innerText = "المبلغ المدفوع ($)";
         document.getElementById("labelRate").innerText = "سعر الشراء في السوق";
@@ -50,7 +48,8 @@ function calculate() {
     const totalCost = getRawValue("totalCost");
     const paidUSD = getRawValue("paidUSD");
     const marketBuy = getRawValue("marketBuy");
-    const marginPercent = getRawValue("margin");
+    // This now gets the value from the dropdown
+    const marginPercent = parseFloat(document.getElementById("margin").value);
 
     const output = document.getElementById("output");
 
@@ -76,13 +75,10 @@ function calculate() {
     `;
 
     if (difference > 0) {
-        // BLUE BOX
         resultHTML += `<div class="result info">${tReturn}: ${formatNumber(difference)} ${currency}</div>`;
     } else if (difference < 0) {
-        // RED BOX
         resultHTML += `<div class="result danger">${tMustPay}: ${formatNumber(Math.abs(difference))} ${currency}</div>`;
     } else if (totalCost > 0) {
-        // GREEN BOX
         resultHTML += `<div class="result success">${tSuccess}</div>`;
     }
 
