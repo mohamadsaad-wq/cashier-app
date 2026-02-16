@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cashier Currency Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container" id="mainContainer">
+        <div style="text-align: right; margin-bottom: 10px;">
+            <button type="button" onclick="toggleLanguage()" id="langBtn">العربية</button>
+        </div>
+
+        <h2 id="title">Cashier Currency Calculator</h2>
+
+        <label id="labelTotal">Total Cost (SYP)</label>
+        <input type="text" id="totalCost" placeholder="0" oninput="handleInput(this)">
+
+        <label id="labelPaid">Customer Paid ($)</label>
+        <input type="text" id="paidUSD" placeholder="0" oninput="handleInput(this)">
+
+        <label id="labelRate">Market Buy Rate</label>
+        <input type="text" id="marketBuy" placeholder="0" oninput="handleInput(this)">
+
+        <label id="labelMargin">Margin (%)</label>
+        <input type="text" id="margin" placeholder="0" oninput="handleInput(this)">
+
+        <div id="output"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
