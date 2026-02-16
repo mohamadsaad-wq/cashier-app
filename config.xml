@@ -1,8 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.cashier.calculator" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.cashier.calculator" version="1.0.0" xmlns="http://www.w3.org/ns/widgets">
     <name>Cashier Calc</name>
-    <description>Currency Calculator for Cashiers</description>
-    <author email="dev@example.com" href="http://example.com">Your Name</author>
+    <description>Currency Calculator</description>
+    <author>Cashier</author>
     <content src="index.html" />
     <access origin="*" />
+    <preference name="Orientation" value="portrait" />
 </widget>
