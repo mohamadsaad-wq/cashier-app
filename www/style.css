@@ -18,17 +18,42 @@ body {
     width: 100%;
     max-width: 420px;
     background: #ffffff;
-    padding: 35px;
-    border-radius: 18px;
-    box-shadow: 0 15px 35px rgba(120, 90, 80, 0.15);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(120, 90, 80, 0.12);
     border: 1px solid #e6d8cf;
+    position: relative;
+}
+
+/* Top Row Styling */
+.top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.margin-box {
+    width: 70px;
+}
+
+.margin-box label {
+    font-size: 10px;
+    margin-bottom: 2px;
+}
+
+#margin {
+    padding: 5px;
+    font-size: 12px;
+    margin-bottom: 0;
+    background-color: #faf7f5;
 }
 
 h2 {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
     color: #9c6b60;
-    font-weight: 600;
+    font-size: 20px;
 }
 
 label {
@@ -41,61 +66,72 @@ label {
 
 input, select {
     width: 100%;
-    padding: 13px;
-    margin-bottom: 20px;
+    padding: 12px;
+    margin-bottom: 15px;
     border-radius: 10px;
     border: 1px solid #e8ddd6;
     font-size: 15px;
     background-color: #faf7f5;
-    appearance: none; /* Removes default mobile styling */
 }
 
-input:focus, select:focus {
-    border-color: #c38e8e;
-    outline: none;
-    background-color: #ffffff;
+/* Beautiful Total Paid Box (Beige/Rose) */
+.total-paid-card {
+    background: linear-gradient(135deg, #fdf5f2 0%, #fae1dd 100%);
+    border: 1px solid #f2d1cc;
+    padding: 15px;
+    border-radius: 12px;
+    margin: 15px 0;
+    text-align: center;
+    color: #8a5a51;
 }
 
-button {
-    width: auto;
-    padding: 5px 15px;
-    background-color: transparent;
-    color: #9c6b60;
-    border: 1px solid #c38e8e;
-    border-radius: 10px;
-    font-size: 15px;
-    font-weight: 600;
+.total-paid-card small {
+    display: block;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+}
+
+.total-paid-card span {
+    font-size: 22px;
+    font-weight: 800;
+}
+
+/* Details Toggle */
+.details-btn {
+    background: none;
+    border: none;
+    color: #c38e8e;
+    font-size: 12px;
+    text-decoration: underline;
     cursor: pointer;
+    margin-bottom: 10px;
+    padding: 0;
+    display: inline-block;
+}
+
+.hidden-details {
+    display: none;
+    background: #fdfbf9;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #8d7670;
+    margin-bottom: 15px;
+    border: 1px dashed #e8ddd6;
 }
 
 .result {
-    margin-top: 25px;
-    padding: 18px;
+    padding: 15px;
     border-radius: 12px;
     font-size: 16px;
     font-weight: 700;
     text-align: center;
 }
 
-.danger { 
-    background-color: #ffe5e5; 
-    color: #d93025; 
-    border: 1px solid #f8b4b4;
-}
+.danger { background-color: #ffe5e5; color: #d93025; border: 1px solid #f8b4b4; }
+.info { background-color: #e8f0fe; color: #1a73e8; border: 1px solid #c2d7fa; }
+.success { background-color: #e6f4ea; color: #1e8e3e; border: 1px solid #b7e1cd; }
 
-.info { 
-    background-color: #e8f0fe; 
-    color: #1a73e8; 
-    border: 1px solid #c2d7fa;
-}
-
-.success { 
-    background-color: #e6f4ea; 
-    color: #1e8e3e; 
-    border: 1px solid #b7e1cd;
-}
-
-.rtl {
-    direction: rtl;
-    text-align: right;
-}
+.rtl { direction: rtl; text-align: right; }
