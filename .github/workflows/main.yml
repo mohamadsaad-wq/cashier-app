@@ -23,6 +23,7 @@ jobs:
       - name: Build APK
         run: |
           cordova platform add android
+          cordova plugin add cordova-plugin-splashscreen
           cordova build android --debug
 
       - name: Upload APK
