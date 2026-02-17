@@ -31,19 +31,18 @@ body {
     margin-bottom: 30px;
 }
 
-/* World Icon Language Dropdown */
 .lang-dropdown {
     display: flex;
     align-items: center;
     background: #faf7f5;
-    padding: 5px 10px;
+    padding: 5px 12px;
     border-radius: 12px;
     border: 1px solid #e8ddd6;
 }
 
 .lang-dropdown i {
     color: #9c6b60;
-    margin-right: 5px;
+    margin-left: 8px;
     font-size: 18px;
 }
 
@@ -54,19 +53,19 @@ body {
     font-weight: 700;
     color: #9c6b60;
     cursor: pointer;
-    margin-bottom: 0;
-    padding: 0;
     width: auto;
 }
 
 h2 {
     color: #9c6b60;
-    font-size: 24px; /* Bigger font */
+    font-size: 22px;
+    text-align: center;
+    flex: 1;
 }
 
 label {
     display: block;
-    font-size: 16px; /* Bigger font */
+    font-size: 18px;
     font-weight: 600;
     color: #7a5c53;
     margin-bottom: 8px;
@@ -74,15 +73,14 @@ label {
 
 input, select {
     width: 100%;
-    padding: 15px; /* More padding */
+    padding: 15px;
     margin-bottom: 20px;
     border-radius: 12px;
     border: 1px solid #e8ddd6;
-    font-size: 18px; /* Bigger input text */
+    font-size: 20px;
     background-color: #faf7f5;
 }
 
-/* Beige/Rose Card */
 .total-paid-card {
     background: linear-gradient(135deg, #fdf5f2 0%, #fae1dd 100%);
     border: 1px solid #f2d1cc;
@@ -95,12 +93,12 @@ input, select {
 
 .total-paid-card small {
     display: block;
-    font-size: 14px;
+    font-size: 16px;
     margin-bottom: 8px;
 }
 
 .total-paid-card span {
-    font-size: 28px; /* Bigger result font */
+    font-size: 32px;
     font-weight: 800;
 }
 
@@ -108,7 +106,7 @@ input, select {
     background: none;
     border: none;
     color: #c38e8e;
-    font-size: 14px;
+    font-size: 16px;
     text-decoration: underline;
     cursor: pointer;
     margin: 15px 0;
@@ -122,16 +120,10 @@ input, select {
     margin-bottom: 20px;
 }
 
-/* Margin Dropdown (now inside hidden details) */
-#margin {
-    font-size: 16px;
-    padding: 10px;
-}
-
 .result {
     padding: 20px;
     border-radius: 15px;
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 700;
     text-align: center;
 }
@@ -141,4 +133,4 @@ input, select {
 .success { background-color: #e6f4ea; color: #1e8e3e; border: 1px solid #b7e1cd; }
 
 .rtl { direction: rtl; text-align: right; }
-.rtl .lang-dropdown i { margin-right: 0; margin-left: 5px; }
+.rtl .lang-dropdown i { margin-left: 8px; margin-right: 0; }
