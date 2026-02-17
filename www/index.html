@@ -1,38 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cashier Currency Calculator</title>
+    <title>حاسبة الكاشير</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="container" id="mainContainer">
+    <div class="container rtl" id="mainContainer">
         <div class="top-row">
-            <div class="margin-box">
-                <label id="labelMargin">Margin</label>
-                <select id="margin" onchange="calculate()">
-                    <option value="0">0%</option>
-                    <option value="1">1%</option>
-                    <option value="2" selected>2%</option>
-                    <option value="3">3%</option>
-                    <option value="4">4%</option>
-                    <option value="5">5%</option>
+            <div class="lang-dropdown">
+                <i class="fas fa-globe"></i>
+                <select id="langSelect" onchange="changeLanguage()">
+                    <option value="ar" selected>AR</option>
+                    <option value="en">EN</option>
                 </select>
             </div>
-            <button type="button" onclick="toggleLanguage()" id="langBtn">العربية</button>
+            <h2 id="title">حاسبة الكاشير</h2>
         </div>
 
-        <h2 id="title">Cashier Currency Calculator</h2>
-
-        <label id="labelTotal">Total Cost (SYP)</label>
+        <label id="labelTotal">التكلفة الإجمالية (ل.س)</label>
         <input type="text" id="totalCost" placeholder="0" oninput="handleInput(this)">
 
-        <label id="labelPaid">Customer Paid ($)</label>
+        <label id="labelPaid">المبلغ المدفوع ($)</label>
         <input type="text" id="paidUSD" placeholder="0" oninput="handleInput(this)">
 
-        <label id="labelRate">Market Buy Rate</label>
+        <label id="labelRate">سعر السوق</label>
         <input type="text" id="marketBuy" placeholder="0" oninput="handleInput(this)">
 
         <div id="output"></div>
