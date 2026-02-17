@@ -3,15 +3,13 @@
     <name>Cashier Calc</name>
     <description>Currency Calculator</description>
     <author>Cashier</author>
-    
     <content src="index.html" />
-    
     <icon src="icon.png" />
     
-    <preference name="SplashScreen" value="screen" />
-    <preference name="AutoHideSplashScreen" value="true" />
     <preference name="SplashScreenDelay" value="0" />
+    <preference name="AutoHideSplashScreen" value="true" />
     <preference name="FadeSplashScreen" value="false" />
+    <preference name="ShowSplashScreenSpinner" value="false" />
 
     <access origin="*" />
     <preference name="Orientation" value="portrait" />
