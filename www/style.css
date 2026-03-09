@@ -16,9 +16,9 @@ body {
 
 .container {
     width: 100%;
-    max-width: 380px;
+    max-width: 400px;
     background: #ffffff;
-    padding: 20px;
+    padding: 25px;
     border-radius: 20px;
     box-shadow: 0 10px 25px rgba(120, 90, 80, 0.12);
     border: 1px solid #e6d8cf;
@@ -36,88 +36,86 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 24px;
-    height: 24px;
+    width: 26px;
+    height: 26px;
 }
 
-.lang-dropdown i { 
-    color: #9c6b60; 
-    font-size: 14px; 
-    pointer-events: none; 
-}
+.lang-dropdown i { color: #9c6b60; font-size: 16px; pointer-events: none; }
 
 #langSelect {
     position: absolute;
     width: 100%;
     height: 100%;
-    opacity: 0; 
+    opacity: 0;
     cursor: pointer;
 }
 
-h2 { color: #9c6b60; font-size: 15px; text-align: center; flex: 1; font-weight: 700; }
+h2 { color: #9c6b60; font-size: 18px; text-align: center; flex: 1; font-weight: 700; }
 
 label {
     display: block;
-    font-size: 12px;
+    font-size: 14px; /* Slightly bigger */
     font-weight: 600;
     color: #7a5c53;
-    margin: 8px 0 4px 0;
+    margin: 10px 0 5px 0;
 }
 
 input, select {
     width: 100%;
-    padding: 10px;
-    margin-bottom: 12px;
+    padding: 12px;
+    margin-bottom: 15px;
     border-radius: 8px;
     border: 1px solid #e8ddd6;
-    font-size: 14px;
+    font-size: 16px; /* Slightly bigger */
     background-color: #faf7f5;
+}
+
+/* Same size result boxes */
+.total-paid-card, .result {
+    width: 100%;
+    min-height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    margin-bottom: 12px;
 }
 
 .total-paid-card {
     background: linear-gradient(135deg, #fdf5f2 0%, #fae1dd 100%);
     border: 1px solid #f2d1cc;
-    padding: 15px;
-    border-radius: 12px;
-    margin-top: 15px;
-    text-align: center;
     color: #8a5a51;
 }
 
-.total-paid-card small { display: block; font-size: 10px; margin-bottom: 4px; opacity: 0.8; }
-.total-paid-card span { font-size: 22px; font-weight: 800; }
+.total-paid-card small { font-size: 12px; margin-bottom: 4px; opacity: 0.9; }
+.total-paid-card span { font-size: 24px; font-weight: 800; }
+
+.result {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.danger { background-color: #ffe5e5; color: #d93025; border: 1px solid #f8b4b4; }
+.info { background-color: #e8f0fe; color: #1a73e8; border: 1px solid #c2d7fa; }
+.success { background-color: #e6f4ea; color: #1e8e3e; border: 1px solid #b7e1cd; }
 
 .details-btn {
     background: none;
     border: none;
     color: #c38e8e;
-    font-size: 10px;
+    font-size: 12px;
     text-decoration: underline;
     cursor: pointer;
-    margin: 8px 0;
+    margin: 10px auto;
     display: block;
 }
 
 .hidden-details {
     background: #fdfbf9;
-    padding: 12px;
-    border-radius: 8px;
-    font-size: 11px;
-    border: 1px dashed #e8ddd6;
-    margin-bottom: 10px;
-}
-
-.result {
-    padding: 12px;
+    padding: 15px;
     border-radius: 10px;
-    font-size: 14px;
-    font-weight: 700;
-    text-align: center;
-    margin-top: 8px;
+    border: 1px dashed #e8ddd6;
 }
-
-.danger { background-color: #ffe5e5; color: #d93025; }
-.info { background-color: #e8f0fe; color: #1a73e8; }
-.success { background-color: #e6f4ea; color: #1e8e3e; }
 
 .rtl { direction: rtl; text-align: right; }
