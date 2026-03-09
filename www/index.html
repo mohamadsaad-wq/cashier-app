@@ -26,7 +26,28 @@
         <label id="labelPaid">المبلغ المدفوع ($)</label>
         <input type="text" id="paidUSD" placeholder="0" oninput="handleInput(this)">
 
-        <div id="output"></div>
+        <div id="changeArea"></div>
+        <div id="totalPaidArea"></div>
+
+        <button class="details-btn" id="btnDetails" onclick="toggleDetails()">المزيد من التفاصيل</button>
+        
+        <div id="settingsArea" class="hidden-details" style="display: none;">
+            <p><strong id="labelInternal">سعر الشراء الداخلي:</strong> <span id="internalValue">0</span></p>
+            <hr style="margin: 8px 0; border: 0; border-top: 1px solid #eee;">
+            
+            <label id="labelMarket">سعر السوق</label>
+            <input type="text" id="marketBuy" value="11,400" oninput="handleInput(this)">
+
+            <label id="labelMargin">الهامش (%)</label>
+            <select id="margin" onchange="calculate()">
+                <option value="0" selected>0%</option>
+                <option value="1">1%</option>
+                <option value="2">2%</option>
+                <option value="3">3%</option>
+                <option value="4">4%</option>
+                <option value="5">5%</option>
+            </select>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>
