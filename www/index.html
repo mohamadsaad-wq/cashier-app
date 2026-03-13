@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Currency Calculator</title>
+    <title>Currency Calculator Pro</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -18,6 +18,7 @@
                 </select>
             </div>
             <h2 id="title">Currency Calculator</h2>
+            <button class="reset-btn" onclick="resetAll()"><i class="fas fa-undo"></i></button>
         </div>
 
         <label id="labelTotal">التكلفة الإجمالية (ل.س)</label>
@@ -29,22 +30,31 @@
         <div id="changeArea"></div>
         <div id="totalPaidArea"></div>
 
-        <button class="details-btn" id="btnDetails" onclick="toggleDetails()">المزيد من التفاصيل</button>
+        <button class="details-btn" id="btnDetails" onclick="tryAccessAdmin()">المزيد من التفاصيل</button>
         
-        <div id="settingsArea" class="hidden-details" style="display: none;">
-            <p><strong id="labelInternal">سعر الشراء الداخلي:</strong> <span id="internalValue">0</span></p>
-            <hr style="margin: 8px 0; border: 0; border-top: 1px solid #eee;">
+        <div id="adminPanel" class="admin-box" style="display: none;">
+            <div class="admin-header">
+                <span id="adminTitle">إعدادات الإدارة</span>
+                <button onclick="lockAdmin()"><i class="fas fa-lock"></i></button>
+            </div>
             
-            <label id="labelMarket">سعر السوق</label>
-            <input type="text" id="marketBuy" value="11,400" oninput="handleInput(this)">
+            <p><strong id="labelInternal">سعر الشراء الداخلي:</strong> <span id="internalValue">0</span></p>
+            <p class="profit-text"><strong id="labelProfit">ربح الصرافة:</strong> <span id="profitValue">0</span></p>
+            
+            <hr>
+
+            <label id="labelMarket">سعر السوق (للكاشير)</label>
+            <input type="text" id="marketBuy" oninput="handleInput(this)">
+
+            <label id="labelReal">سعر الصرف الحقيقي (خفي)</label>
+            <input type="text" id="realRate" oninput="handleInput(this)">
 
             <label id="labelMargin">الهامش (%)</label>
             <select id="margin" onchange="calculate()">
-                <option value="0" selected>0%</option>
+                <option value="0">0%</option>
                 <option value="1">1%</option>
                 <option value="2">2%</option>
                 <option value="3">3%</option>
-                <option value="4">4%</option>
                 <option value="5">5%</option>
             </select>
         </div>
