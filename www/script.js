@@ -1,4 +1,3 @@
-// CONFIGURATION
 const ADMIN_PIN = "0468"; 
 let isArabic = true;
 let isAdmin = false;
@@ -7,9 +6,8 @@ function loadSettings() {
     const savedMarket = localStorage.getItem("marketBuy") || "11,400";
     const savedReal = localStorage.getItem("realRate") || "11,500";
     const savedMargin = localStorage.getItem("margin") || "0";
-    
     document.getElementById("marketBuy").value = savedMarket;
-    document.getElementById("marketViewOnly").value = savedMarket; // For Cashier
+    document.getElementById("marketViewOnly").value = savedMarket;
     document.getElementById("realRate").value = savedReal;
     document.getElementById("margin").value = savedMargin;
 }
@@ -26,10 +24,8 @@ function handleInput(input) {
     let parts = value.split('.');
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     input.value = parts.join('.');
-    
     let newLen = input.value.length;
     input.setSelectionRange(selection + (newLen - oldLen), selection + (newLen - oldLen));
-    
     calculate();
 }
 
@@ -42,13 +38,13 @@ function tryAccessAdmin() {
     if (isAdmin) {
         isAdmin = false;
         document.getElementById("adminPanel").style.display = "none";
-        document.getElementById("btnDetails").innerText = isArabic ? "إعدادات الإدارة (PIN)" : "Admin Settings (PIN)";
+        document.getElementById("btnDetails").innerText = isArabic ? "المزيد من التفاصيل" : "More Details";
     } else {
         const pin = prompt(isArabic ? "أدخل رمز الأمان (PIN):" : "Enter Admin PIN:");
         if (pin === ADMIN_PIN) {
             isAdmin = true;
             document.getElementById("adminPanel").style.display = "block";
-            document.getElementById("btnDetails").innerText = isArabic ? "قفل الإعدادات" : "Lock Settings";
+            document.getElementById("btnDetails").innerText = isArabic ? "إخفاء التفاصيل" : "Hide Details";
             calculate();
         } else if (pin !== null) {
             alert(isArabic ? "رمز خاطئ!" : "Incorrect PIN!");
@@ -66,9 +62,7 @@ function changeLanguage() {
     const lang = document.getElementById("langSelect").value;
     isArabic = (lang === "ar");
     const container = document.getElementById("mainContainer");
-    
-    if (isArabic) container.classList.add("rtl"); 
-    else container.classList.remove("rtl");
+    if (isArabic) container.classList.add("rtl"); else container.classList.remove("rtl");
 
     document.getElementById("labelTotal").innerText = isArabic ? "التكلفة الإجمالية (ل.س)" : "Total Cost (SYP)";
     document.getElementById("labelPaid").innerText = isArabic ? "المبلغ المدفوع ($)" : "Customer Paid ($)";
@@ -79,6 +73,11 @@ function changeLanguage() {
     document.getElementById("labelInternal").innerText = isArabic ? "سعر الشراء الداخلي:" : "Internal Buy Rate:";
     document.getElementById("labelProfit").innerText = isArabic ? "ربح الصرافة:" : "Exchange Profit:";
     
+    if(!isAdmin) {
+        document.getElementById("btnDetails").innerText = isArabic ? "المزيد من التفاصيل" : "More Details";
+    } else {
+        document.getElementById("btnDetails").innerText = isArabic ? "إخفاء التفاصيل" : "Hide Details";
+    }
     calculate();
 }
 
@@ -89,7 +88,6 @@ function calculate() {
     const realRate = getRawValue("realRate");
     const marginPercent = parseFloat(document.getElementById("margin").value);
 
-    // Update Ghost field for Cashier
     document.getElementById("marketViewOnly").value = document.getElementById("marketBuy").value;
 
     localStorage.setItem("marketBuy", document.getElementById("marketBuy").value);
