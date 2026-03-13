@@ -1,20 +1,32 @@
+// CONFIGURATION
+const ADMIN_PIN = "1234"; // Set your PIN here
 let isArabic = true;
-let showDetails = false;
+let isAdmin = false;
+
+// Load Saved Settings from Mobile Storage
+function loadSettings() {
+    const savedMarket = localStorage.getItem("marketBuy") || "11,400";
+    const savedReal = localStorage.getItem("realRate") || "11,500";
+    const savedMargin = localStorage.getItem("margin") || "0";
+    
+    document.getElementById("marketBuy").value = savedMarket;
+    document.getElementById("realRate").value = savedReal;
+    document.getElementById("margin").value = savedMargin;
+}
 
 function formatNumber(number) {
-    if (isNaN(number)) return "0";
     return Math.round(number).toLocaleString("en-US");
 }
 
 function handleInput(input) {
     let selection = input.selectionStart;
     let oldLen = input.value.length;
-
     let value = input.value.replace(/[^0-9.]/g, '');
     let parts = value.split('.');
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     input.value = parts.join('.');
     
+    // Maintain cursor position
     let newLen = input.value.length;
     input.setSelectionRange(selection + (newLen - oldLen), selection + (newLen - oldLen));
     
@@ -26,14 +38,33 @@ function getRawValue(id) {
     return el ? parseFloat(el.value.replace(/,/g, '')) || 0 : 0;
 }
 
-function toggleDetails() {
-    showDetails = !showDetails;
-    const area = document.getElementById("settingsArea");
-    const btn = document.getElementById("btnDetails");
-    area.style.display = showDetails ? 'block' : 'none';
-    btn.innerText = isArabic ? 
-        (showDetails ? "إخفاء الإعدادات" : "المزيد من التفاصيل") : 
-        (showDetails ? "Hide Settings" : "More Details");
+// PIN Protection
+function tryAccessAdmin() {
+    if (isAdmin) {
+        lockAdmin();
+    } else {
+        const pin = prompt(isArabic ? "أدخل رمز الأمان (PIN):" : "Enter Admin PIN:");
+        if (pin === ADMIN_PIN) {
+            isAdmin = true;
+            document.getElementById("adminPanel").style.display = "block";
+            document.getElementById("btnDetails").innerText = isArabic ? "قفل الإعدادات" : "Lock Settings";
+            calculate();
+        } else if (pin !== null) {
+            alert(isArabic ? "رمز خاطئ!" : "Incorrect PIN!");
+        }
+    }
+}
+
+function lockAdmin() {
+    isAdmin = false;
+    document.getElementById("adminPanel").style.display = "none";
+    document.getElementById("btnDetails").innerText = isArabic ? "المزيد من التفاصيل" : "More Details";
+}
+
+function resetAll() {
+    document.getElementById("totalCost").value = "";
+    document.getElementById("paidUSD").value = "";
+    calculate();
 }
 
 function changeLanguage() {
@@ -41,73 +72,75 @@ function changeLanguage() {
     isArabic = (lang === "ar");
     const container = document.getElementById("mainContainer");
     
-    const labels = {
-        total: isArabic ? "التكلفة الإجمالية (ل.س)" : "Total Cost (SYP)",
-        paid: isArabic ? "المبلغ المدفوع ($)" : "Customer Paid ($)",
-        market: isArabic ? "سعر السوق" : "Market Rate",
-        margin: isArabic ? "الهامش (%)" : "Margin (%)",
-        internal: isArabic ? "سعر الشراء الداخلي:" : "Internal Buy Rate:",
-        btn: showDetails ? 
-            (isArabic ? "إخفاء الإعدادات" : "Hide Settings") : 
-            (isArabic ? "المزيد من التفاصيل" : "More Details")
-    };
-
-    if (isArabic) container.classList.add("rtl");
+    if (isArabic) container.classList.add("rtl"); 
     else container.classList.remove("rtl");
 
-    document.getElementById("labelTotal").innerText = labels.total;
-    document.getElementById("labelPaid").innerText = labels.paid;
-    document.getElementById("labelMarket").innerText = labels.market;
-    document.getElementById("labelMargin").innerText = labels.margin;
-    document.getElementById("labelInternal").innerText = labels.internal;
-    document.getElementById("btnDetails").innerText = labels.btn;
-
+    // Translations
+    document.getElementById("labelTotal").innerText = isArabic ? "التكلفة الإجمالية (ل.س)" : "Total Cost (SYP)";
+    document.getElementById("labelPaid").innerText = isArabic ? "المبلغ المدفوع ($)" : "Customer Paid ($)";
+    document.getElementById("labelMarket").innerText = isArabic ? "سعر السوق (للكاشير)" : "Market Rate (Cashier)";
+    document.getElementById("labelReal").innerText = isArabic ? "سعر الصرف الحقيقي (خفي)" : "Real Street Rate (Hidden)";
+    document.getElementById("labelMargin").innerText = isArabic ? "الهامش (%)" : "Margin (%)";
+    document.getElementById("labelInternal").innerText = isArabic ? "سعر الشراء الداخلي:" : "Internal Buy Rate:";
+    document.getElementById("labelProfit").innerText = isArabic ? "ربح الصرافة:" : "Exchange Profit:";
+    document.getElementById("adminTitle").innerText = isArabic ? "إعدادات الإدارة" : "Admin Settings";
+    
+    if (!isAdmin) {
+        document.getElementById("btnDetails").innerText = isArabic ? "المزيد من التفاصيل" : "More Details";
+    }
     calculate();
 }
 
 function calculate() {
     const totalCost = getRawValue("totalCost");
     const paidUSD = getRawValue("paidUSD");
-    const marketBuy = getRawValue("marketBuy") || 11400;
-    const marginPercent = parseFloat(document.getElementById("margin").value) || 0;
+    
+    const marketBuy = getRawValue("marketBuy");
+    const realRate = getRawValue("realRate");
+    const marginPercent = parseFloat(document.getElementById("margin").value);
+
+    // Save current settings to local storage
+    localStorage.setItem("marketBuy", document.getElementById("marketBuy").value);
+    localStorage.setItem("realRate", document.getElementById("realRate").value);
+    localStorage.setItem("margin", document.getElementById("margin").value);
 
     const internalBuyRate = marketBuy * (1 - (marginPercent / 100));
     const paidInSYP = paidUSD * internalBuyRate;
     const difference = paidInSYP - totalCost;
+    
+    // Profit Logic: (Actual Street Value - What we told the app)
+    const actualStreetValue = paidUSD * realRate;
+    const exchangeProfit = actualStreetValue - paidInSYP;
 
     const currency = isArabic ? "ل.س" : "SYP";
-    
-    // Update Internal Rate text
-    document.getElementById("internalValue").innerText = formatNumber(internalBuyRate);
 
-    // Update Result Areas
+    // Update Admin UI
+    document.getElementById("internalValue").innerText = formatNumber(internalBuyRate);
+    document.getElementById("profitValue").innerText = formatNumber(exchangeProfit) + " " + currency;
+
+    // Update Cashier UI
     const changeArea = document.getElementById("changeArea");
     const totalPaidArea = document.getElementById("totalPaidArea");
 
     if (paidUSD === 0 && totalCost === 0) {
-        changeArea.innerHTML = "";
-        totalPaidArea.innerHTML = "";
-        return;
+        changeArea.innerHTML = ""; totalPaidArea.innerHTML = ""; return;
     }
 
-    // 1. Total Paid Area
-    totalPaidArea.innerHTML = `
-        <div class="total-paid-card">
-            <small>${isArabic ? "إجمالي المدفوع (ل.س)" : "Total Paid (SYP)"}</small>
-            <span>${formatNumber(paidInSYP)}</span>
-        </div>`;
-
-    // 2. Change Area (Now above total paid)
     if (difference > 0) {
         changeArea.innerHTML = `<div class="result info">${isArabic ? "باقي للزبون" : "Return"}: ${formatNumber(difference)} ${currency}</div>`;
     } else if (difference < 0) {
         changeArea.innerHTML = `<div class="result danger">${isArabic ? "يجب دفع" : "Must pay"}: ${formatNumber(Math.abs(difference))} ${currency}</div>`;
     } else if (totalCost > 0) {
         changeArea.innerHTML = `<div class="result success">${isArabic ? "تم الدفع" : "Paid"}</div>`;
-    } else {
-        changeArea.innerHTML = "";
     }
+
+    totalPaidArea.innerHTML = `
+        <div class="total-paid-card">
+            <small>${isArabic ? "إجمالي المدفوع (ل.س)" : "Total Paid (SYP)"}</small>
+            <span>${formatNumber(paidInSYP)}</span>
+        </div>`;
 }
 
-// Init
+// Initial Load
+loadSettings();
 calculate();
