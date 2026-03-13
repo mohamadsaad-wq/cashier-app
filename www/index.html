@@ -33,24 +33,19 @@
         <label id="labelMarketView">سعر الصرف المعتمد حالياً</label>
         <input type="text" id="marketViewOnly" disabled style="background-color: #eee; color: #888;">
 
-        <button class="details-btn" id="btnDetails" onclick="tryAccessAdmin()">إعدادات الإدارة (PIN)</button>
+        <button class="details-btn" id="btnDetails" onclick="tryAccessAdmin()">المزيد من التفاصيل</button>
         
         <div id="adminPanel" class="admin-box" style="display: none;">
             <div class="admin-header">
                 <span id="adminTitle">إعدادات الإدارة</span>
             </div>
-            
             <p><strong id="labelInternal">سعر الشراء الداخلي:</strong> <span id="internalValue">0</span></p>
             <p class="profit-text"><strong id="labelProfit">ربح الصرافة:</strong> <span id="profitValue">0</span></p>
-            
             <hr>
-
             <label id="labelMarketEdit">تعديل سعر السوق</label>
             <input type="text" id="marketBuy" oninput="handleInput(this)">
-
             <label id="labelReal">سعر الصرف الحقيقي (خفي)</label>
             <input type="text" id="realRate" oninput="handleInput(this)">
-
             <label id="labelMargin">الهامش (%)</label>
             <select id="margin" onchange="calculate()">
                 <option value="0">0%</option>
